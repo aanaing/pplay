@@ -28,6 +28,7 @@ const Index = () => {
   const [users, setUsers] = useState(null);
 
   const [loadUsers, result] = useLazyQuery(USERS);
+  //console.log(result);
 
   useEffect(() => {
     loadUsers({
@@ -37,11 +38,13 @@ const Index = () => {
 
   useEffect(() => {
     if (result.data) {
+      console.log(result.data);
       setUsers(result.data.users);
       setCount(Number(result.data?.users_aggregate.aggregate.count));
     }
   }, [result]);
 
+  console.log(result);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
     setOffset(rowsPerPage * newPage);
@@ -53,6 +56,7 @@ const Index = () => {
   };
 
   if (!users) {
+    ///console.log(users);
     return (
       <div>
         <em>Loading...</em>
@@ -107,11 +111,6 @@ const Index = () => {
                 <TableCell style={{ minWidth: 60 }}>Image</TableCell>
                 <TableCell style={{ minWidth: 70 }}>Name</TableCell>
                 <TableCell style={{ minWidth: 70 }}>Phone</TableCell>
-                <TableCell style={{ minWidth: 70 }}>Loyalty Points</TableCell>
-                <TableCell style={{ minWidth: 70 }}>Member Tire</TableCell>
-                <TableCell style={{ minWidth: 70 }}>
-                  Member Start Data
-                </TableCell>
                 <TableCell style={{ minWidth: 70 }}>Created At</TableCell>
                 <TableCell style={{ minWidth: 70 }}>Updated At</TableCell>
                 <TableCell style={{ minWidth: 100 }}>Actions</TableCell>
@@ -132,11 +131,6 @@ const Index = () => {
                   </TableCell>
                   <TableCell>{row.username}</TableCell>
                   <TableCell>{row.phone}</TableCell>
-                  <TableCell>{row.loyalty_points}</TableCell>
-                  <TableCell>{row.member_tier}</TableCell>
-                  <TableCell>
-                    {row.member_start_data?.substring(0, 10)}
-                  </TableCell>
                   <TableCell>{row.created_at.substring(0, 10)}</TableCell>
                   <TableCell>{row.updated_at.substring(0, 10)}</TableCell>
                   <TableCell>

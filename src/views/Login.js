@@ -31,6 +31,7 @@ const Login = () => {
   const [showAlert, setShowAlert] = useState({ message: "", isError: false });
   const navigate = useNavigate();
 
+  /*Part of gql */
   const [postLogin] = useMutation(LOGIN, {
     onError: (error) => {
       console.log("error : ", error);
@@ -40,20 +41,20 @@ const Login = () => {
       }, 3000);
     },
     onCompleted: (result) => {
-      //console.log(result);
+      console.log(result);
       setValues({ username: "", password: "", showPassword: false });
       setLoading(false);
       if (result.AdminLogIn.error) {
         //console.log(result.AdminLogIn.error);
         setShowAlert({ message: result.AdminLogIn.message, isError: true });
-        console.log(result.AdminLogIn.message);
+        //console.log(result.AdminLogIn.message);
         setTimeout(() => {
           setShowAlert({ message: "", isError: false });
         }, 3000);
         return;
       }
       const decodedToken = jose.decodeJwt(result.AdminLogIn.accessToken);
-      console.log(decodedToken);
+      //console.log(decodedToken);
       const data = JSON.stringify({
         token: result.AdminLogIn.accessToken,
         // userID: decodedToken.hasura['x-hasura-user-id']
@@ -64,7 +65,7 @@ const Login = () => {
       navigate("/");
     },
   });
-
+  console.log(postLogin);
   const handleClickShowPassword = () => {
     setValues({
       ...values,
@@ -101,7 +102,7 @@ const Login = () => {
       setLoading(false);
       return;
     }
-    console.log("values : ", values);
+    //console.log("values : ", values);
     postLogin({
       variables: { username: values.username, password: values.password },
     });
@@ -117,13 +118,9 @@ const Login = () => {
             justifyContent: "center",
             alignItems: "center",
             textAlign: "center",
-            //bgcolor: '#c4c4c4',
-            //bgcolor: "#ccf2ff",
-            bgcolor: "#fff",
           }}
         >
           <Box sx={{ m: 1 }}>
-            {/*<img alt="V.Jun" src={logo} width="130" />*/}
             <Typography variant="h4" paragraph>
               PowerPlay Admin Dashboard
             </Typography>

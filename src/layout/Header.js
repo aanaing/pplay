@@ -8,7 +8,7 @@ import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
-import { Typography, Chip } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 340;
@@ -78,7 +78,7 @@ const Header = ({ handleDrawerOpen, open }) => {
           {open ? <CloseIcon /> : <MenuIcon />}
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          V.Jun Dashboard
+          PowerPlay Dashboard
         </Typography>
         <strong>
           {/* <Chip

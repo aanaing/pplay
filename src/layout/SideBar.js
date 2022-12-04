@@ -6,8 +6,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-import { Box, Avatar } from "@mui/material";
-import logo from "../static/logo192.png";
+import { Box } from "@mui/material";
+import logo from "../static/PPlay_logo.png";
 
 import { Link } from "react-router-dom";
 const drawerWidth = 340;
@@ -38,11 +38,8 @@ const SideBar = ({ open }) => {
     >
       <DrawerHeader sx={{}}>
         <Box sx={{ width: "100%", display: "flex", justifyContent: "center" }}>
-          <Avatar alt="PowerPlay" src={logo} className="nav-logo" />
+          <img src={logo} alt="power play" width="200px" height="25px" />
         </Box>
-        {/* <IconButton onClick={handleDrawerClose}>
-                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-            </IconButton> */}
       </DrawerHeader>
       {/* <Divider /> */}
       <List className="nav-list">

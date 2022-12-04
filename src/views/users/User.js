@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
-import {
-  USER,
-  UPDATE_USER,
-  UPDATE_MEMBER_TIRE,
-  UPDATE_POINT,
-} from "../../gql/users";
+import { USER, UPDATE_USER } from "../../gql/users";
 
 import {
   Breadcrumbs,
@@ -16,30 +11,18 @@ import {
   Card,
   CardHeader,
   CardContent,
+  CardActions,
+  Button,
   CardMedia,
   ListItem,
   ListItemText,
-  CardActions,
-  Button,
   Alert,
-  FormControl,
-  MenuItem,
-  InputLabel,
-  Select,
-  TextField,
 } from "@mui/material";
 import AddressTable from "../../components/users/AddressTable";
 
-let timeId = null;
-
 const User = () => {
   const { id } = useParams();
-
   const result = useQuery(USER, { variables: { id: id } });
-
-  const [tier, setTier] = useState("");
-  const [point, setPoint] = useState("");
-  const [errorPoint, setErrorPoint] = useState("");
   const [showAlert, setShowAlert] = useState({ message: "", isError: false });
 
   const [editUser] = useMutation(UPDATE_USER, {
@@ -59,45 +42,6 @@ const User = () => {
     refetchQueries: [User],
   });
 
-  const [editMemberTire] = useMutation(UPDATE_MEMBER_TIRE, {
-    onError: (error) => {
-      console.log("error : ", error);
-      setShowAlert({ message: "Error on server", isError: true });
-      setTimeout(() => {
-        setShowAlert({ message: "", isError: false });
-      }, 3000);
-    },
-    onCompleted: () => {
-      setShowAlert({
-        message: "User's member tire have been updated.",
-        isError: false,
-      });
-      setTimeout(() => {
-        setShowAlert({ message: "", isError: false });
-      }, 3000);
-    },
-    refetchQueries: [User],
-  });
-
-  const [editPoint] = useMutation(UPDATE_POINT, {
-    onCompleted: () => {
-      setShowAlert({
-        message: "User's member tire have been updated.",
-        isError: false,
-      });
-      setTimeout(() => {
-        setShowAlert({ message: "", isError: false });
-      }, 3000);
-    },
-    refetchQueries: [User],
-  });
-
-  useEffect(() => {
-    if (result.data) {
-      setPoint(result.data.users_by_pk.loyalty_points);
-    }
-  }, [result.data]);
-
   if (result.loading) {
     return (
       <div>
@@ -105,46 +49,7 @@ const User = () => {
       </div>
     );
   }
-
   const user = result.data.users_by_pk;
-
-  const updateMemberTire = (e) => {
-    const changeTier = e.target.value;
-    console.log(changeTier);
-    if (changeTier === "Free") {
-      if (changeTier > new Date.now()) setTier("Basic");
-      else setTier("Free");
-    }
-
-    if (changeTier === "Basic") {
-      if (changeTier > new Date.now()) setTier("Medium");
-      else setTier("Basic");
-    }
-
-    if (changeTier === "Medium") {
-      if (changeTier > new Date.now()) setTier("Premium");
-      else setTier("Medium");
-    }
-
-    editMemberTire({ variables: { id: user.id, tier: e.target.value } });
-  };
-
-  const updatePoint = (e) => {
-    setErrorPoint("");
-    if (timeId) {
-      clearTimeout(timeId);
-    }
-    setPoint(e.target.value);
-    let p = e.target.value;
-    if (!p || isNaN(+p)) {
-      setErrorPoint("Point must be at least 0");
-      return;
-    }
-    timeId = setTimeout(() => {
-      editPoint({ variables: { id: user.id, point: p } });
-    }, 2500);
-  };
-
   return (
     <div>
       <div role="presentation">
@@ -209,32 +114,8 @@ const User = () => {
                   <ListItem>
                     <ListItemText primary="Phone" secondary={user.phone} />
                   </ListItem>
-                  <ListItem>
-                    <ListItemText
-                      primary="Loyalty Points"
-                      secondary={user.loyalty_points}
-                    />
-                  </ListItem>
                 </Box>
                 <Box>
-                  <ListItem>
-                    <ListItemText
-                      primary="Member ID"
-                      secondary={user.member_id}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText
-                      primary="Member Tier"
-                      secondary={user.member_tier}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText
-                      primary="Member Start Date"
-                      secondary={user.member_start_date}
-                    />
-                  </ListItem>
                   <ListItem>
                     <ListItemText
                       primary="Created At"
@@ -251,32 +132,6 @@ const User = () => {
               </Paper>
             </CardContent>
             <CardActions sx={{ justifyContent: "space-between" }}>
-              <Box>
-                <FormControl sx={{ m: 2, width: 200 }} variant="outlined">
-                  <InputLabel id="tier">Change Member Tier</InputLabel>
-                  <Select
-                    labelId="tier"
-                    value={tier}
-                    label="Change Member Tier"
-                    onChange={updateMemberTire}
-                  >
-                    <MenuItem value="">Free</MenuItem>
-                    <MenuItem value="">Basic</MenuItem>
-                    <MenuItem value="MEMBER">Medium</MenuItem>
-                    <MenuItem value="VIP">Premium</MenuItem>
-                  </Select>
-                </FormControl>
-                <FormControl sx={{ m: 2, width: 200 }} variant="outlined">
-                  <TextField
-                    id="point"
-                    label="Change Loyalty Point"
-                    value={point}
-                    onChange={updatePoint}
-                    error={errorPoint ? true : false}
-                    helperText={errorPoint}
-                  />
-                </FormControl>
-              </Box>
               {user.disabled ? (
                 <Button
                   variant="outlined"
