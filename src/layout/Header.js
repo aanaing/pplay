@@ -10,8 +10,9 @@ import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import "../style/App.css";
 
-const drawerWidth = 340;
+const drawerWidth = 300;
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== "open",
@@ -61,12 +62,8 @@ const Header = ({ handleDrawerOpen, open }) => {
   // }
 
   return (
-    <AppBar
-      position="fixed"
-      open={open}
-      sx={{ bgcolor: "#F8F7FC", color: "black" }}
-    >
-      <Toolbar sx={{ border: "3px solid white" }}>
+    <AppBar position="fixed" open={open}>
+      <Toolbar className="AppBar">
         <IconButton
           size="large"
           edge="start"
@@ -77,16 +74,16 @@ const Header = ({ handleDrawerOpen, open }) => {
         >
           {open ? <CloseIcon /> : <MenuIcon />}
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Typography variant="h6" sx={{ flexGrow: 3 }} fontWeight="bold">
           PowerPlay Dashboard
         </Typography>
-        <strong>
-          {/* <Chip
+        {/* <strong>
+          <Chip
             label={`Pending Orders: ${data?.user_order_aggregate?.aggregate?.count}`}
             color="error"
             variant="outlined"
-          /> */}
-        </strong>
+          />
+        </strong> */}
         <div>
           <IconButton
             size="large"
@@ -96,7 +93,7 @@ const Header = ({ handleDrawerOpen, open }) => {
             onClick={handleMenu}
             color="inherit"
           >
-            <AccountCircle />
+            <AccountCircle sx={{ color: "#ed8618" }} />
           </IconButton>
           <Menu
             id="menu-appbar"
@@ -113,9 +110,6 @@ const Header = ({ handleDrawerOpen, open }) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            {/* <MenuItem onClick={handleClose}>
-                  <Link to='/profile'>Profile</Link>
-                </MenuItem> */}
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>

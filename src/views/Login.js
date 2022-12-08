@@ -15,6 +15,8 @@ import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Typography from "@mui/material/Typography";
+import logo from "../static/PPlay_logo.png";
+import "../style/App.css";
 
 const Login = () => {
   const [values, setValues] = React.useState({
@@ -114,31 +116,74 @@ const Login = () => {
       <Container maxWidth="sm">
         <Box
           sx={{
+            height: "100vh",
+            display: "flex",
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
             textAlign: "center",
+            bgcolor: "#000",
+            color: "#fff",
           }}
         >
-          <Box sx={{ m: 1 }}>
-            <Typography variant="h4" paragraph>
+          <Box>
+            <FormControl
+              className="logo"
+              sx={{
+                p: 1.3,
+                width: "270px",
+                height: "50px",
+                backgroundColor: "#fff",
+                borderRadius: "40px",
+                borderColor: "orange",
+                m: 3,
+                boxShadow: 10,
+              }}
+            >
+              <img alt="V.Jun" src={logo} width="250px" height="50px" />
+            </FormControl>
+            <Typography variant="h4" fontWeight="bold" paragraph>
               PowerPlay Admin Dashboard
+            </Typography>
+            <Typography variant="subtitle2" component="p">
+              Enter your credentials to continue
             </Typography>
           </Box>
           <Box>
-            <FormControl sx={{ m: 2, width: "300px" }} variant="filled">
+            {/* <div>
+              <TextField
+                label="name"
+                id="name"
+                variant="filled"
+                borderColor="#fff"
+                value={values.username}
+                onChange={handleChange("username")}
+                error={errors.username ? true : false}
+                helperText={errors.username}
+              />
+            </div> */}
+            <FormControl
+              style={{ borderRadius: "3px" }}
+              sx={{ m: 2, width: "300px", backgroundColor: "#fff" }}
+              variant="filled"
+            >
               <TextField
                 id="name"
                 label="Name"
+                color="warning"
                 value={values.username}
                 onChange={handleChange("username")}
                 error={errors.username ? true : false}
                 helperText={errors.username}
               />
             </FormControl>
-            <FormControl sx={{ m: 2, width: "300px" }} variant="filled">
+            <FormControl
+              style={{ borderRadius: "3px" }}
+              sx={{ m: 2, width: "300px", backgroundColor: "#fff" }}
+            >
               <TextField
                 id="password"
+                color="warning"
                 type={values.showPassword ? "text" : "password"}
                 value={values.password}
                 onChange={handleChange("password")}
@@ -165,12 +210,12 @@ const Login = () => {
                 helperText={errors.password}
               />
             </FormControl>
-            <FormControl sx={{ m: 2, width: "300px" }}>
+            <FormControl sx={{ m: 4, width: "300px", fontWeight: "bold" }}>
               <LoadingButton
                 onClick={handleClick}
                 loading={loading}
                 variant="contained"
-                sx={{ backgroundColor: "#3d5c5c" }}
+                sx={{ backgroundColor: "#ed8618" }}
               >
                 Sign In
               </LoadingButton>

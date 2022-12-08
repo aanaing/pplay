@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import DirectionsIcon from "@mui/icons-material/Directions";
+import "../../style/App.css";
 import {
   Box,
   Breadcrumbs,
@@ -9,6 +17,8 @@ import {
   Table,
   TableHead,
   TableBody,
+  tableCellClasses,
+  styled,
   TableRow,
   TableCell,
   TextField,
@@ -26,9 +36,7 @@ const Index = () => {
   const [offset, setOffset] = useState(0);
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState(null);
-
   const [loadUsers, result] = useLazyQuery(USERS);
-  //console.log(result);
 
   useEffect(() => {
     loadUsers({
@@ -38,13 +46,13 @@ const Index = () => {
 
   useEffect(() => {
     if (result.data) {
-      console.log(result.data);
+      //console.log(result.data);
       setUsers(result.data.users);
       setCount(Number(result.data?.users_aggregate.aggregate.count));
     }
   }, [result]);
 
-  console.log(result);
+  //console.log(result);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
     setOffset(rowsPerPage * newPage);
@@ -55,43 +63,93 @@ const Index = () => {
     setPage(0);
   };
 
+  const handleSearch = (e) => {
+    setSearch(document.getElementById("search-by-phone").value);
+  };
+
   if (!users) {
     ///console.log(users);
     return (
-      <div>
+      <div className="loading">
         <em>Loading...</em>
       </div>
     );
   }
 
+  /*For table color*/
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+      fontSize: 16,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 15,
+      //backgroundColor: theme.palette.common.white,
+      color: theme.palette.common.white,
+    },
+  }));
+
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    "&:last-child td, &:last-child th": {
+      border: 0,
+    },
+  }));
+
   return (
     <div>
-      <div role="presentation">
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link to="/">Dashboard</Link>
-          <span>Users</span>
-        </Breadcrumbs>
-      </div>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-          my: 2,
-        }}
-      >
-        <FormControl sx={{ width: 300 }}>
-          <TextField
-            id="search-by-phone"
-            label="Search By Name or Phone"
-            type="search"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
+      <div className="align">
+        {/* dashboard */}
+        <div>
+          <Breadcrumbs aria-label="breadcrumb" fontWeight="bold" color="#fff">
+            <Link to="/" className="dashboard">
+              Dashboard
+            </Link>
+            <span>Users</span>
+          </Breadcrumbs>
+        </div>
+        {/* search */}
+        <div>
+          <Paper
+            component="form"
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: 350,
             }}
-          />
-        </FormControl>
-      </Box>
+          >
+            {/* Search Box */}
+
+            <InputBase
+              id="search-by-phone"
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search By Name or Phone"
+              type="search"
+              // value={search}
+              // onChange={handleSearch}
+            />
+            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+            <IconButton
+              color="warning"
+              sx={{ p: "10px" }}
+              aria-label="directions"
+              value={search}
+              onClick={handleSearch}
+            >
+              <DirectionsIcon />
+            </IconButton>
+          </Paper>
+        </div>
+      </div>
+
       <Box
         sx={{
           display: "flex",
@@ -103,52 +161,65 @@ const Index = () => {
           },
         }}
       >
-        <TableContainer sx={{ maxHeight: "60vh" }}>
+        <TableContainer sx={{ maxHeight: "60vh", Width: "100px" }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
-                <TableCell style={{ minWidth: 50 }}>ID</TableCell>
-                <TableCell style={{ minWidth: 60 }}>Image</TableCell>
-                <TableCell style={{ minWidth: 70 }}>Name</TableCell>
-                <TableCell style={{ minWidth: 70 }}>Phone</TableCell>
-                <TableCell style={{ minWidth: 70 }}>Created At</TableCell>
-                <TableCell style={{ minWidth: 70 }}>Updated At</TableCell>
-                <TableCell style={{ minWidth: 100 }}>Actions</TableCell>
+                <StyledTableCell
+                  style={{
+                    minWidth: 100,
+                    fontWeight: "bold",
+                  }}
+                >
+                  ID
+                </StyledTableCell>
+                <StyledTableCell style={{ minWidth: 70, fontWeight: "bold" }}>
+                  Name
+                </StyledTableCell>
+                <StyledTableCell style={{ minWidth: 70, fontWeight: "bold" }}>
+                  Phone
+                </StyledTableCell>
+                <StyledTableCell style={{ minWidth: 70, fontWeight: "bold" }}>
+                  Created At
+                </StyledTableCell>
+                <StyledTableCell style={{ minWidth: 70, fontWeight: "bold" }}>
+                  Updated At
+                </StyledTableCell>
+                <StyledTableCell style={{ minWidth: 100, fontWeight: "bold" }}>
+                  Actions
+                </StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {users.map((row, index) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  <TableCell>{row.id.substring(0, 8)}</TableCell>
-                  <TableCell>
-                    <Avatar
-                      alt="User"
-                      src={row.image_url}
-                      sx={{ width: 56, height: 56 }}
-                    >
-                      U
-                    </Avatar>
-                  </TableCell>
-                  <TableCell>{row.username}</TableCell>
-                  <TableCell>{row.phone}</TableCell>
-                  <TableCell>{row.created_at.substring(0, 10)}</TableCell>
-                  <TableCell>{row.updated_at.substring(0, 10)}</TableCell>
-                  <TableCell>
+                <StyledTableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  <StyledTableCell>{row.id.substring(0, 8)}</StyledTableCell>
+                  <StyledTableCell>{row.username}</StyledTableCell>
+                  <StyledTableCell>{row.phone}</StyledTableCell>
+                  <StyledTableCell>
+                    {row.created_at.substring(0, 10)}
+                  </StyledTableCell>
+                  <StyledTableCell>
+                    {row.updated_at.substring(0, 10)}
+                  </StyledTableCell>
+                  <StyledTableCell>
                     {/* <Button size="small" color={ row.disabled? 'success' : 'error' } >{ row.disabled ? 'Enable' : 'Disable' }</Button> */}
                     <Button
                       size="small"
-                      color="secondary"
+                      color="warning"
+                      fontWeight="bold"
                       onClick={() => navigate(`/user/${row.id}`)}
                     >
                       Detail
                     </Button>
-                  </TableCell>
-                </TableRow>
+                  </StyledTableCell>
+                </StyledTableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
+          sx={{ color: "white" }}
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
           count={count}

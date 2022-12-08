@@ -84,7 +84,17 @@ const Admin = () => {
   }, []);
 
   return (
-    <Box sx={{ display: "flex", bgcolor: "#F8F7FC", minHeight: "100vh" }}>
+    <Box
+      sx={{
+        display: "flex",
+        //bgcolor: "#F8F7FC",
+        bgcolor: "#1e1e1e",
+        //bgcolor: "#c5c8c6",
+        //bgcolor: "green",
+
+        minHeight: "100vh",
+      }}
+    >
       <CssBaseline />
       <Header open={open} handleDrawerOpen={handleDrawer} />
       <SideBar handleDrawerClose={handleDrawerClose} open={open} />
@@ -95,6 +105,7 @@ const Admin = () => {
             <Routes>
               <Route path="/users" element={<Users />} />
               <Route path="/user/:id" element={<User />} />
+              {/* <Route path="/users/video" element={<Video />} /> */}
             </Routes>
           </AuthContext.Provider>
         </Suspense>
