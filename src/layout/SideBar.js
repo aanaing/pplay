@@ -58,7 +58,7 @@ const SideBar = ({ open }) => {
         </Box>
       </DrawerHeader>
       <List className="nav-list" style={{ fontSize: "18px" }}>
-        <Link to="/users" className="nav-link">
+        <Link to="/" className="nav-link">
           <ListItem button className="nav-btn">
             <ListItemIcon>
               <AccountCircleIcon

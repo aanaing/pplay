@@ -91,7 +91,7 @@ const User = () => {
 
   return (
     <div>
-      <div role="presentation">
+      <div role="presentation" className="align">
         <Breadcrumbs aria-label="breadcrumb" style={{ color: "white" }}>
           <Link to="/" className="dashboard">
             Dashboard
@@ -118,28 +118,49 @@ const User = () => {
             justifyContent: "space-around",
           }}
         >
-          <Box>
+          <Box sx={{ color: "white" }}>
             <ListItem>
-              <ListItemText primary="ID" secondary={user.id} />
+              <ListItemText
+                primary="ID"
+                secondary={user.id}
+                secondaryTypographyProps={{ color: "#ed8618" }}
+              />
             </ListItem>
             <ListItem>
-              <ListItemText primary="Name" secondary={user.username} />
+              <ListItemText
+                primary="Name"
+                secondary={user.username}
+                secondaryTypographyProps={{ color: "#ed8618" }}
+              />
             </ListItem>
             <ListItem>
-              <ListItemText primary="Phone" secondary={user.phone} />
+              <ListItemText
+                primary="Phone"
+                secondary={user.phone}
+                secondaryTypographyProps={{ color: "#ed8618" }}
+              />
             </ListItem>
             <ListItem>
               {typeof user.address == "object" ? (
                 <ListItemText
                   primary="Address"
                   secondary={user.address.address}
+                  secondaryTypographyProps={{ color: "#ed8618" }}
                 />
               ) : (
-                <ListItemText primary="Address" secondary={user.address} />
+                <ListItemText
+                  primary="Address"
+                  secondary={user.address}
+                  secondaryTypographyProps={{ color: "#ed8618" }}
+                />
               )}
             </ListItem>
             <ListItem>
-              <ListItemText primary="Date of Birth" secondary={user.dob} />
+              <ListItemText
+                primary="Date of Birth"
+                secondary={user.dob}
+                secondaryTypographyProps={{ color: "#ed8618" }}
+              />
             </ListItem>
           </Box>
           <Box>
@@ -147,25 +168,36 @@ const User = () => {
               <ListItemText
                 primary="basic_Subscription_timeout"
                 secondary={user.basic_subscription_timeout}
+                secondaryTypographyProps={{ color: "#ed8618" }}
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 primary="medium_Subscription_timeout"
                 secondary={user.medium_subscription_timeout}
+                secondaryTypographyProps={{ color: "#ed8618" }}
               />
             </ListItem>
             <ListItem>
               <ListItemText
                 primary="premium_Subscription_timeout"
                 secondary={user.premium_subscription_timeout}
+                secondaryTypographyProps={{ color: "#ed8618" }}
               />
             </ListItem>
             <ListItem>
-              <ListItemText primary="Created At" secondary={user.created_at} />
+              <ListItemText
+                primary="Created At"
+                secondary={user.created_at}
+                secondaryTypographyProps={{ color: "#ed8618" }}
+              />
             </ListItem>
             <ListItem>
-              <ListItemText primary="Updated At" secondary={user.updated_at} />
+              <ListItemText
+                primary="Updated At"
+                secondary={user.updated_at}
+                secondaryTypographyProps={{ color: "#ed8618" }}
+              />
             </ListItem>
           </Box>
         </Paper>
@@ -184,9 +216,8 @@ const User = () => {
               //sx={style}
               sx={{
                 "& .MuiInputLabel-root": { color: "white" }, //styles the label
-                color: "white",
                 ".MuiOutlinedInput-notchedOutline": {
-                  borderColor: "white",
+                  borderColor: "#ed8618",
                 },
 
                 "&:hover .MuiOutlinedInput-notchedOutline": {
@@ -194,18 +225,19 @@ const User = () => {
                 },
 
                 "&.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "white",
+                  borderColor: "#ed8618",
                 },
-                "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
-                  {
-                    borderColor: "#ed8618",
-                  },
+                // "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+                //   {
+                //     borderColor: "#ed8618",
+                //   },
                 "&.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline":
                   {
                     borderColor: "#ed8618",
                   },
 
                 width: 200,
+                color: "white",
               }}
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
@@ -225,11 +257,15 @@ const User = () => {
             sx={{
               "& .MuiInputLabel-root": { color: "white" }, //styles the label
               ".MuiOutlinedInput-notchedOutline": {
-                borderColor: "white",
-              },
-              "&:hover .MuiOutlinedInput-notchedOutline": {
                 borderColor: "#ed8618",
               },
+              // "&:hover .MuiOutlinedInput-notchedOutline": {
+              //   borderColor: "#ed8618",
+              // },
+              // "&.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline":
+              //   {
+              //     borderColor: "#ed8618",
+              //   },
               width: 200,
               mt: 1,
               color: "white",

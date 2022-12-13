@@ -15,10 +15,11 @@ import { Alert } from "@mui/material";
 import Header from "../layout/Header";
 import SideBar from "../layout/SideBar";
 
-// const Dashboard = lazy(() => import('./Dashboard'));
+//const Dashboard = lazy(() => import("./Dashboard"));
 
 const Users = lazy(() => import("./users/index"));
 const User = lazy(() => import("./users/User"));
+const Video = lazy(() => import("./Video/index"));
 
 const drawerWidth = 340;
 
@@ -103,9 +104,9 @@ const Admin = () => {
         <Suspense fallback={<div>Loading...</div>}>
           <AuthContext.Provider value={auth}>
             <Routes>
-              <Route path="/users" element={<Users />} />
+              <Route path="/" element={<Users />} />
               <Route path="/user/:id" element={<User />} />
-              {/* <Route path="/users/video" element={<Video />} /> */}
+              <Route path="/video" element={<Video />} />
             </Routes>
           </AuthContext.Provider>
         </Suspense>

@@ -64,7 +64,14 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 2rem;
+  margin: 0.5rem;
+  margin-left: 1rem;
 }
 .loading {
   color: white;
+}
+.exercise {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
 }

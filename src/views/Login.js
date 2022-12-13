@@ -128,7 +128,6 @@ const Login = () => {
         >
           <Box>
             <FormControl
-              className="logo"
               sx={{
                 p: 1.3,
                 width: "270px",
@@ -150,27 +149,16 @@ const Login = () => {
             </Typography>
           </Box>
           <Box>
-            {/* <div>
-              <TextField
-                label="name"
-                id="name"
-                variant="filled"
-                borderColor="#fff"
-                value={values.username}
-                onChange={handleChange("username")}
-                error={errors.username ? true : false}
-                helperText={errors.username}
-              />
-            </div> */}
             <FormControl
               style={{ borderRadius: "3px" }}
               sx={{ m: 2, width: "300px", backgroundColor: "#fff" }}
-              variant="filled"
             >
               <TextField
                 id="name"
                 label="Name"
+                size="small"
                 color="warning"
+                variant="filled"
                 value={values.username}
                 onChange={handleChange("username")}
                 error={errors.username ? true : false}
@@ -183,7 +171,9 @@ const Login = () => {
             >
               <TextField
                 id="password"
+                size="small"
                 color="warning"
+                variant="filled"
                 type={values.showPassword ? "text" : "password"}
                 value={values.password}
                 onChange={handleChange("password")}
@@ -214,6 +204,7 @@ const Login = () => {
               <LoadingButton
                 onClick={handleClick}
                 loading={loading}
+                size="medium"
                 variant="contained"
                 sx={{ backgroundColor: "#ed8618" }}
               >
